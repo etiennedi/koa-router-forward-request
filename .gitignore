@@ -3,3 +3,7 @@
 
 #node
 node_modules
+npm-debug.log
+
+#lib folder
+lib

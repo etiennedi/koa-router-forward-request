@@ -1,4 +1,6 @@
-const createForward = config => function* () {
+import pathToRegexp from 'path-to-regexp';
+
+export default config => function* () {
 
   console.log(this.params);
 

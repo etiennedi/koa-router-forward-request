@@ -25,6 +25,10 @@
   "homepage": "https://github.com/etiennedi/koa-router-forward-request#readme",
   "devDependencies": {
     "babel-cli": "^6.18.0",
-    "babel-preset-node5": "^12.0.0"
+    "babel-preset-node5": "^11.1.0"
+  },
+  "dependencies": {
+    "lodash.pick": "^4.4.0",
+    "path-to-regexp": "^1.7.0"
   }
 }

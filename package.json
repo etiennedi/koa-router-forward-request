@@ -7,7 +7,9 @@
     "dist": "babel ./src --out-dir ./lib --ignore spec.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/etiennedi/koa-router-forward-request.git"

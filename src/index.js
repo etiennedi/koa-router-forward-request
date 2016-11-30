@@ -17,7 +17,7 @@ export default config => function*() {
   let body;
   if (config.request.composeBody) {
     const bodyParsed = this.request.body;
-    body = config.request.composeBody(bodyParsed)
+    body = yield config.request.composeBody(bodyParsed)
   } else {
     body = this.request.body;
   }
@@ -37,7 +37,7 @@ export default config => function*() {
   // compose response body
   if (config.response && config.response.composeBody && res.statusCode === config.response.successOnStatus) {
     const body = yield JSON.parse(res.body);
-    this.response.body = JSON.stringify(config.response.composeBody(body));
+    this.response.body = JSON.stringify(yield config.response.composeBody(body));
   } else {
     this.response.body = res.body;
   }

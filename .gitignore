@@ -7,3 +7,7 @@ npm-debug.log
 
 #lib folder
 lib
+
+#nyc
+coverage
+.nyc_output

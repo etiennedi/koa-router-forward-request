@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "scripts": {
     "dist": "babel ./src --out-dir ./lib --ignore spec.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc --require babel-core/register npm run test:mocha",
+    "test:mocha": "./node_modules/.bin/mocha --compilers js:babel-core/register --recursive ./tests/"
   },
   "files": [
     "lib"
@@ -30,9 +31,15 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "babel-preset-node5": "^11.1.0",
+    "chai": "^3.5.0",
+    "co-mocha": "^1.1.3",
     "del": "^2.2.2",
     "gulp": "^3.9.1",
-    "gulp-babel": "^6.1.2"
+    "gulp-babel": "^6.1.2",
+    "mocha": "^3.2.0",
+    "nock": "^9.0.2",
+    "nyc": "^10.0.0",
+    "sinon": "^1.17.6"
   },
   "dependencies": {
     "lodash.pick": "^4.4.0",

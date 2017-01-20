@@ -1,14 +1,19 @@
 import pathToRegexp from 'path-to-regexp';
 import pick from 'lodash.pick';
 import request from 'request-promise';
+import { parse } from 'url';
 
 export default config => function*() {
 
   // parse URL
   const paramKeys = [];
-  pathToRegexp(config.request.url, paramKeys);
-  const compileUrl = pathToRegexp.compile(config.request.url);
-  const url = compileUrl(this.params);
+
+  const urlParsed = parse(config.request.url);
+
+  pathToRegexp(urlParsed.path, paramKeys);
+  const compileUrl = pathToRegexp.compile(urlParsed.path);
+  const url = urlParsed.protocol + '//'
+    + urlParsed.host + compileUrl(this.params);
 
   // pick headers
   const headers = pick(this.request.headers, config.request.forwardHeaders);

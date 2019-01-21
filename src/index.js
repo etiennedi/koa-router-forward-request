@@ -1,7 +1,17 @@
 import pathToRegexp from 'path-to-regexp';
 import pick from 'lodash.pick';
-import request from 'request-promise';
 import { parse } from 'url';
+import request from 'request';
+
+const doRequest = (method, options) => new Promise((resolve, reject) => {
+  request[method](options, (error, response) => {
+    if (!error) {
+      resolve(response);
+    } else {
+      reject(response);
+    }
+  })
+});
 
 const forward = config => async (ctx) => {
   // parse URL
@@ -36,7 +46,7 @@ const forward = config => async (ctx) => {
     simple: false
   };
 
-  const res = await request[config.request.method](options);
+  const res = await doRequest(config.request.method, options);
 
   // compose response body
   if (config.response && config.response.composeBody && res.statusCode === config.response.successOnStatus) {

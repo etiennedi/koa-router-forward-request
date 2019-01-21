@@ -13,7 +13,7 @@ const doRequest = (method, options) => new Promise((resolve, reject) => {
   })
 });
 
-const forward = config => async (ctx) => {
+exports.default = config => async function (ctx) {
   // parse URL
   const paramKeys = [];
 
@@ -60,4 +60,3 @@ const forward = config => async (ctx) => {
   ctx.response.status = res.statusCode;
 };
 
-module.exports = forward;

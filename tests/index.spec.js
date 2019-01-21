@@ -1,11 +1,7 @@
-import mocha from 'mocha';
-import coMocha from 'co-mocha';
 import {expect} from 'chai';
 import nock from 'nock';
 
 import createForward from '../src/index';
-
-coMocha(mocha);
 
 const url = 'http://api.com';
 
@@ -34,28 +30,28 @@ describe('GET, no body, no params, no transforming', () => {
       nock.cleanAll();
     });
 
-    it('should forward the set headers', function* () {
+    it('should forward the set headers', async () => {
       const scope = nock(url)
       .matchHeader('authorization', 'foo_auth')
       .get('/foo').reply(200);
-      yield forward.call(ctx);
+      await forward(ctx);
       expect(scope.isDone()).to.equal(true);
     });
 
-    it('should remove the other headers', function* () {
+    it('should remove the other headers', async () => {
       const scope = nock(url, {
         badheaders: ['unwanted']
       })
         .get('/foo')
         .reply(200);
-      yield forward.call(ctx);
+      await forward(ctx);
       expect(scope.isDone()).to.equal(true);
     })
 
   });
 
   describe('response', () => {
-    before(function*() {
+    before(async () => {
       nock(url, {
         reqheaders: {
           authorization: 'foo_auth',
@@ -63,20 +59,19 @@ describe('GET, no body, no params, no transforming', () => {
       })
         .get('/foo')
         .reply(200, 'foo');
-      yield forward.call(ctx);
+      await forward(ctx);
     });
 
     after(() => {
       nock.cleanAll();
     });
 
-    it('should forward the status from the remote request', function*() {
+    it('should forward the status from the remote request', async () => {
       expect(ctx.response.status).to.equal(200);
     });
 
-    it('should forward the body (unchanged) from the remote request', function*() {
+    it('should forward the body (unchanged) from the remote request', async () => {
       expect(ctx.response.body).to.equal('foo');
     });
   });
-
-})
+});

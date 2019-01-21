@@ -3,7 +3,7 @@ import pick from 'lodash.pick';
 import request from 'request-promise';
 import { parse } from 'url';
 
-export default config => async function (ctx) {
+const forward = config => async (ctx) => {
   // parse URL
   const paramKeys = [];
 
@@ -49,3 +49,5 @@ export default config => async function (ctx) {
   // forward status code
   ctx.response.status = res.statusCode;
 };
+
+module.exports = forward;
